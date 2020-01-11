@@ -45,13 +45,13 @@ data:
     .:53 {
           errors
           health
-          
+
           # Removed support for the proxy plugin: https://coredns.io/2019/03/03/coredns-1.4.0-release/
           grpc global 127.0.0.1:8053
           forward . /etc/resolv.conf {
             except global
           }
-          
+
           prometheus :9153
           cache 30
           reload
@@ -116,7 +116,7 @@ spec:
         resources:
           requests:
             cpu: 10m
-          
+
       - name: istio-coredns-plugin
         command:
         - /usr/local/bin/plugin
@@ -129,7 +129,7 @@ spec:
         resources:
           requests:
             cpu: 10m
-          
+
       dnsPolicy: Default
       volumes:
       - name: config-volume
@@ -138,7 +138,7 @@ spec:
           items:
           - key: Corefile
             path: Corefile
-      affinity:      
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
@@ -585,7 +585,7 @@ spec:
           resources:
             requests:
               cpu: 10m
-            
+
           volumeMounts:
           - name: config-volume
             mountPath: /etc/prometheus
@@ -599,7 +599,7 @@ spec:
         secret:
           defaultMode: 420
           secretName: istio.default
-      affinity:      
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
@@ -6296,7 +6296,7 @@ metadata:
   labels:
     app: istio-egressgateway
     istio: egressgateway
-    
+
     release: istio
 spec:
   selector:
@@ -6312,7 +6312,7 @@ spec:
       labels:
         app: istio-egressgateway
         istio: egressgateway
-        
+
         heritage: Tiller
         release: istio
         chart: gateways
@@ -6374,7 +6374,7 @@ spec:
             requests:
               cpu: 100m
               memory: 128Mi
-            
+
           env:
           - name: NODE_NAME
             valueFrom:
@@ -6424,7 +6424,7 @@ spec:
                 fieldPath: metadata.namespace
           - name: ISTIO_META_ROUTER_MODE
             value: sni-dnat
-          
+
           - name: ISTIO_METAJSON_LABELS
             value: |
               {"app":"istio-egressgateway","istio":"egressgateway"}
@@ -6433,7 +6433,7 @@ spec:
           - name: SDS_ENABLED
             value: "false"
           volumeMounts:
-          
+
           - name: istio-certs
             mountPath: /etc/certs
             readOnly: true
@@ -6444,7 +6444,7 @@ spec:
             mountPath: "/etc/istio/egressgateway-ca-certs"
             readOnly: true
       volumes:
-      
+
       - name: istio-certs
         secret:
           secretName: istio.default
@@ -6457,7 +6457,7 @@ spec:
         secret:
           secretName: "istio-egressgateway-ca-certs"
           optional: true
-      affinity:      
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
@@ -6538,7 +6538,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: istio-multicluster-egressgateway
-  namespace: istio-system 
+  namespace: istio-system
   labels:
     app: istio-egressgateway
     release: istio
@@ -6819,7 +6819,7 @@ metadata:
   labels:
     release: istio
 data:
-  validatingwebhookconfiguration.yaml: |-    
+  validatingwebhookconfiguration.yaml: |-
     apiVersion: admissionregistration.k8s.io/v1beta1
     kind: ValidatingWebhookConfiguration
     metadata:
@@ -7162,7 +7162,7 @@ metadata:
   labels:
     app: istio-ingressgateway
     istio: ingressgateway
-    
+
     release: istio
 spec:
   selector:
@@ -7178,7 +7178,7 @@ spec:
       labels:
         app: istio-ingressgateway
         istio: ingressgateway
-        
+
         heritage: Tiller
         release: istio
         chart: gateways
@@ -7249,7 +7249,7 @@ spec:
             requests:
               cpu: 100m
               memory: 128Mi
-            
+
           env:
           - name: "ISTIO_META_USER_SDS"
             value: "true"
@@ -7303,7 +7303,7 @@ spec:
                 fieldPath: metadata.namespace
           - name: ISTIO_META_ROUTER_MODE
             value: sni-dnat
-          
+
           - name: ISTIO_METAJSON_LABELS
             value: |
               {"app":"istio-ingressgateway","istio":"ingressgateway"}
@@ -7345,7 +7345,7 @@ spec:
         secret:
           secretName: "istio-ingressgateway-ca-certs"
           optional: true
-      affinity:      
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
@@ -7498,6 +7498,10 @@ spec:
       name: tls
       port: 15443
       targetPort: 15443
+    -
+      name: tcp
+      port: 31400
+      targetPort: 31400
 ---
 
 
@@ -8340,9 +8344,9 @@ data:
 
     # Configmap optimized for Istiod. Please DO NOT MERGE all changes from istio - in particular those dependent on
     # Values.yaml, which should not be used by istiod.
-    
+
     # Istiod only uses SDS based config ( files will mapped/handled by SDS).
-    
+
     template: |
       rewriteAppHTTPProbe: {{ valueOrDefault .Values.sidecarInjectorWebhook.rewriteAppHTTPProbe false }}
       {{- if or (not .Values.istio_cni.enabled) .Values.global.proxy.enableCoreDump }}
@@ -9125,7 +9129,7 @@ apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingWebhookConfiguration
 metadata:
   name: istio-sidecar-injector
-        
+
   labels:
     app: sidecar-injector
     release: istio
@@ -10637,4 +10641,3 @@ metadata:
     app: istio-telemetry
     release: istio
 ---
-

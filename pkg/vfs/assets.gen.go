@@ -8609,6 +8609,9 @@ gateways:
     - port: 15443
       targetPort: 15443
       name: tls
+    - port: 31400
+      targetPort: 31400
+      name: tcp
 
     # Scalability tunning
     # replicaCount: 1
@@ -39559,6 +39562,9 @@ spec:
           - port: 15443
             targetPort: 15443
             name: tls
+          - port: 31400
+            targetPort: 31400
+            name: tcp
         meshExpansionPorts:
           - port: 15011
             targetPort: 15011

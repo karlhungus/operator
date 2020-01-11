@@ -369,6 +369,10 @@ spec:
       name: tls
       port: 15443
       targetPort: 15443
+    -
+      name: tcp
+      port: 31400
+      targetPort: 31400
 ---
 
 
@@ -431,7 +435,7 @@ metadata:
   labels:
     app: istio-ingressgateway
     istio: ingressgateway
-    
+
     release: istio
 spec:
   selector:
@@ -447,7 +451,7 @@ spec:
       labels:
         app: istio-ingressgateway
         istio: ingressgateway
-        
+
       annotations:
         sidecar.istio.io/inject: "false"
     spec:
@@ -515,7 +519,7 @@ spec:
             requests:
               cpu: 100m
               memory: 128Mi
-            
+
           env:
           - name: "ISTIO_META_USER_SDS"
             value: "true"
@@ -567,7 +571,7 @@ spec:
                 fieldPath: metadata.namespace
           - name: ISTIO_META_ROUTER_MODE
             value: sni-dnat
-          
+
           - name: ISTIO_METAJSON_LABELS
             value: |
               {"app":"istio-ingressgateway","istio":"ingressgateway"}
@@ -609,7 +613,7 @@ spec:
         secret:
           secretName: "istio-ingressgateway-ca-certs"
           optional: true
-      affinity:      
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
@@ -798,4 +802,3 @@ spec:
 # SidecarInjector component is disabled.
 
 # Telemetry component is disabled.
-
